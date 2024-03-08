@@ -13,11 +13,28 @@
         <h:outputStylesheet name="test.css" />
     </h:head>
     <h:body>
+        <h:form>
+            <p:growl id="growl" showSummary="true" showDetail="true">
+                <p:autoUpdate />
+            </p:growl>
 
-        <h1>#{testView.string}</h1>
-        <h:form id="frmTest">
-            
+            <p:selectBooleanCheckbox value="#{testView.additionalEntries}" itemLabel="show more entries (Lewis)">
+                <p:ajax update="@form" listener="#{testView.createTimelineModel()}" />
+            </p:selectBooleanCheckbox>
+            <br/>
+            <p:selectBooleanCheckbox value="#{testView.extendedTimePeriod}" itemLabel="extended time-period (Max)">
+                <p:ajax update="@form" listener="#{testView.createTimelineModel()}" />
+            </p:selectBooleanCheckbox>
+            <br/><br/>
+
+            <div class="card">
+                <p:timeline id="timeline" value="#{testView.model}"
+                            start="#{testView.start}" end="#{testView.end}">
+
+                    <p:ajax event="select" listener="#{testView.onSelect}" />
+
+                </p:timeline>
+            </div>
         </h:form>
-
     </h:body>
 </html>
